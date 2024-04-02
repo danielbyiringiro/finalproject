@@ -1,0 +1,76 @@
+#signup_form, #login_form
+{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#name, #email , #password, #signup_button, #email_register, #confirm_password, #role, #login_button, #email_login
+{
+    height: 40px;
+    width: 380px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    padding: 0 10px;
+    border: 2px solid black;
+}
+
+
+#signup_button, #login_button
+{
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+    margin-top: 20px;
+}
+
+#name, #email_login
+{
+    margin-top: 20px;
+}
+
+#signup_title, #login_ptag, #login_title
+{
+    text-align: center;
+}
+
+#signup_title, #login_title
+{
+    font-size: 25px;
+    font-weight: bold;
+}
+
+#login_atag
+{
+    color: rgb(18, 104, 190);
+}
+
+#login_ptag
+{
+    color: gray;
+    margin-top: 10px;
+}
+
+html, body
+{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    background-color: aliceblue !important;
+}
+
+#error_paragraph {
+    font-size: 17px;
+    color: red;
+    margin: 0;
+    animation: shake 0.1s ease-in-out 5 alternate; /* Define the shake animation */
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); } /* Start position of the animation */
+    100% { transform: translateX(15px); } /* End position of the animation */
+}
