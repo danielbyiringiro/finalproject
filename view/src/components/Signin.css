@@ -1,0 +1,104 @@
+#login_title
+{
+    font-size: 25px;
+    font-weight: bold;
+}
+
+#login_ptag, #login_title
+{
+    text-align: center;
+}
+
+#email_login
+{
+    margin-top: 20px;
+}
+
+#login_button
+{
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+    margin-top: 20px;
+}
+
+#login_form
+{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+html, body
+{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    background-color: aliceblue !important;
+}
+
+.input-error
+{
+    border: 1px solid red; /* Red border */
+}
+
+.error-message
+{
+    color: red;
+    font-size: 14px;
+}
+
+#login_form .input-error 
+{
+    border: 1px solid red; /* Red border */
+}
+
+@keyframes shake 
+{
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+
+
+#login_atag
+{
+    color: rgb(18, 104, 190);
+}
+
+#signup_button
+{
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+    margin-top: 20px;
+}
+
+#login_ptag
+{
+    color: gray;
+    margin-top: 10px;
+}
+
+  
+.shake 
+{
+    animation: shake 0.5s ease-in-out; /* Shake animation */
+}
+
+#login_button, #email_login, #password, #signup_button
+{
+    height: 40px;
+    width: 380px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    padding: 0 10px;
+    border: 2px solid black;
+}

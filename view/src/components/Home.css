@@ -1,0 +1,207 @@
+.main 
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh; 
+    width: 100%;
+    flex-direction: column;
+}
+
+.header,
+.body 
+{
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    background-color: #2b6cb0;
+    height: 15%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.body {
+    height: 85%;
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.formLeft
+{
+    margin-left: 20px;
+    gap: 10px;
+    display: flex;
+    flex-direction: row;
+}
+
+.right
+{
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    margin-right: 20px;
+}
+
+#button
+{
+    width: 100px;
+    height: 40px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #0a4283;
+    color: white;
+}
+
+#title, #location
+{
+    height: 40px;
+    width: 250px;
+    border-radius: 5px;
+    padding: 10px;
+    border: 2px solid white;
+}
+
+html, body 
+{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    background-color: white !important;
+}
+
+a
+{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+
+.image, #dollar, #bag
+{
+    width: 20px;
+    height: 20px;
+}
+
+.input-container 
+{
+    position: relative;
+}
+  
+.input-image 
+{
+    position: absolute;
+    top: 50%;
+    right: 10px; 
+    transform: translateY(-50%);
+    pointer-events: none; 
+    height: 25px;
+    width: 25px;
+}
+
+#logo
+{
+    width: 50px;
+    height: 50px;
+}
+.jobcard
+{
+    border: 2px solid #f0f0f0;
+    width: 31%;
+    height: 45%;
+    position: relative;
+    border-radius: 5px;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+.jobright
+{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+.jobheader
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-left: 5px;
+    margin-right: 5px;
+    align-items: center;
+}
+
+#jobbutton
+{
+    width: 80px;
+    height: 40px;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #2b6cb0;
+    color: white;
+}
+
+#bookmark
+{
+    height: 40px;
+    width: 40px;
+    border: 2px solid gray;
+    border-radius: 5px;
+    background-color: gray;
+}
+
+#jobtitle
+{
+    font-size: 15px;
+    font-weight: bold;
+    color: #2b6cb0;
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+#companyinfo
+{
+    font-size: 13px;
+    margin-left: 5px;
+}
+
+#salary, #jobtype
+{
+    font-size: 15px;
+    margin-left: 5px;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    margin-top: 5px;
+    align-items: center;
+}
+
+.jobdescribe
+{
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 10px;
+    font-size: 15px;
+}
+
+#view_details
+{
+    margin-top: 10px;
+    color: white;
+    background-color: #2b6cb0;
+    height: 40px;
+    width: 150px;
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+}

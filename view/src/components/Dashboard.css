@@ -1,0 +1,98 @@
+.mainDiv
+{
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    width: 100vw;
+}
+
+.first
+{
+    background-color: white;
+    padding-left: 10px;
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 2px solid #f0f0f0;
+}
+
+.second
+{
+    background-color: white;
+    width: 80%;
+}
+
+.second_div
+{
+    height: 97%;
+}
+
+.firstfirst
+{
+    align-items: center;
+}
+
+.secondfirst
+{
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+input, select
+{
+    height: 40px;
+    border: 2px solid black;
+    border-radius: 5px;
+    width: 380px;
+}
+
+textarea
+{
+    border-radius: 5px;
+    height: 80px;
+}
+input:hover, select:hover, input:oc
+{
+    border: 2px solid #2b6cb0;
+}
+
+button
+{
+    width: 380px;
+}
+
+html, body
+{
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100%;
+}
+
+.error-message
+{
+    color: red;
+    font-size: 14px;
+}
+.input-error
+{
+    border: 1px solid red; /* Red border */
+}
+
+@keyframes shake 
+{
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+  
+.shake 
+{
+    animation: shake 0.5s ease-in-out; /* Shake animation */
+}

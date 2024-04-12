@@ -1,11 +1,11 @@
-#signup_form, #login_form
+#signup_form
 {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-#name, #email , #password, #signup_button, #email_register, #confirm_password, #role, #login_button, #email_login
+#name, #email , #password, #signup_button, #email_register, #confirm_password, #role
 {
     height: 40px;
     width: 380px;
@@ -16,7 +16,7 @@
 }
 
 
-#signup_button, #login_button
+#signup_button
 {
     background-color: black;
     color: white;
@@ -25,17 +25,17 @@
     margin-top: 20px;
 }
 
-#name, #email_login
+#name
 {
     margin-top: 20px;
 }
 
-#signup_title, #login_ptag, #login_title
+#signup_title
 {
     text-align: center;
 }
 
-#signup_title, #login_title
+#signup_title
 {
     font-size: 25px;
     font-weight: bold;
@@ -50,6 +50,9 @@
 {
     color: gray;
     margin-top: 10px;
+    display: flex;
+    gap: 5px;
+    justify-content: center;
 }
 
 html, body
@@ -63,14 +66,32 @@ html, body
     background-color: aliceblue !important;
 }
 
-#error_paragraph {
-    font-size: 17px;
-    color: red;
-    margin: 0;
-    animation: shake 0.1s ease-in-out 5 alternate; /* Define the shake animation */
+.input-error
+{
+    border: 1px solid red; /* Red border */
 }
 
-@keyframes shake {
-    0% { transform: translateX(0); } /* Start position of the animation */
-    100% { transform: translateX(15px); } /* End position of the animation */
+.error-message
+{
+    color: red;
+    font-size: 14px;
+}
+
+#signup_form .input-error
+{
+    border: 1px solid red; /* Red border */
+}
+  
+@keyframes shake 
+{
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+  
+.shake 
+{
+    animation: shake 0.5s ease-in-out; /* Shake animation */
 }

@@ -1,29 +1,32 @@
 <?php
 
-// Allow requests from all origins (not recommended for production)
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Headers: Content-Type'); // Allow Content-Type header
+include "access_headers.php";
+include "../settings/connection.php";
 
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') 
-{
-    // Handle preflight requests
-    header('Access-Control-Allow-Methods: POST'); // Allow POST method
-    header('Access-Control-Max-Age: 86400'); // Cache preflight response for 24 hours
-    exit;
-}
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Decode JSON input
+    $input = json_decode(file_get_contents('php://input'), true);
 
-header('Content-Type: application/json');
+    $name = $input['name'];
+    $email = $input['email'];
+    $password = $input['password'];
+    $confirm_password = $input['confirm_password'];
+    $role = $input['role'];
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') 
-{
-    $_POST = json_decode(file_get_contents('php://input'), true);
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $confirm_password = $_POST['confirm_password'];
-    $role = $_POST['role'];
+    $sql = "INSERT INTO USER (name, email, password, role) VALUES (?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssss", $name, $email, $hashed_password, $role); // Execute the prepared statement with parameter binding
 
-    // Process the form data and send a response
-    echo json_encode(array('status' => 'success', 'user_id' => 1));
+    if (!$stmt->execute()) 
+    {
+        echo json_encode(array('status' => 'error', 'message' => 'Error executing query' . $conn->error));
+        exit;
+    }
+    else
+    {
+        echo json_encode(array('status' => 'success'));
+        exit;
+    }
 }
