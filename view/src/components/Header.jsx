@@ -3,9 +3,8 @@ import search from '../assets/search.jpg';
 import { Link } from 'react-router-dom';
 import './Home.css';
 
-export default () =>
-{
-    return(
+export default () => {
+    return (
         <div className="header">
             <div className='left'>
                 <form className='formLeft'>
@@ -23,8 +22,8 @@ export default () =>
                 </form>
             </div>
             <div className='right'>
-                <Link to="/dashboard">Profile</Link>
+                {sessionStorage.getItem('role') === 'student' ? <Link to="/dashboards">Profile</Link> : <Link to="/dashboard">Profile</Link>}
             </div>
         </div>
-    )
+    );
 }

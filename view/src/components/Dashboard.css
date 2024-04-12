@@ -96,3 +96,9 @@ html, body
 {
     animation: shake 0.5s ease-in-out; /* Shake animation */
 }
+
+.name, .role, .email
+{
+    justify-content: space-between;
+    align-items: center;
+}

@@ -4,7 +4,9 @@ import Signup from './components/Signup';
 import Signin from './components/Signin';
 import Home from './components/Home';
 import Dashboard from './components/Dashboard';
+import DashboardSeeker from './components/DashboardSeeker';
 import { useState, useEffect } from 'react';
+import Apply from './components/Apply';
 
 const App = () => {
   return (
@@ -43,6 +45,12 @@ const Routes = () => {
       </Route>
       <Route path="/dashboard">
         <Dashboard/>
+      </Route>
+      <Route path="/dashboards">
+        <DashboardSeeker/>
+      </Route>
+      <Route path="/apply">
+        <Apply/>
       </Route>
     </>
   );

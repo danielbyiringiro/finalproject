@@ -10,6 +10,9 @@ import { useState } from 'react';
 export default () =>
 {
     const history = useHistory();
+    const [showCreateJob, setShowCreateJob] = useState(false);
+    const [showProfile, setShowProfile] = useState(true);
+    const [showApplication, setShowApplication] = useState(false);
 
     const [formData, setFormData] = useState({
         title: '',
@@ -22,7 +25,39 @@ export default () =>
       });
 
     const [errors, setErrors] = useState({});
+    const [alertMessage, setAlertMessage] = useState('');
     
+    const handleCreateJobClick = () => {
+        setShowCreateJob(true);
+        setShowProfile(false);
+        setShowApplication(false);
+    };
+
+    const handleShowProfile = () =>
+    {
+        setShowCreateJob(false);
+        setShowProfile(true);
+        setShowApplication(false);
+    }
+
+    const handleShowApplication = () =>
+    {
+        setShowCreateJob(false);
+        setShowProfile(false);
+        setShowApplication(true);
+    }
+
+    const handleLogout = () =>
+    {
+        sessionStorage.clear();
+        history.push('/signin');
+    }
+
+    const handleBackToMain = () =>
+    {
+        history.push('/');
+    }
+
     const handleInputChange = (e) =>
     {
       setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -31,7 +66,7 @@ export default () =>
     const handleSubmit = async (e) =>
     {
         e.preventDefault();
-        console.log(formData);
+        //console.log(formData);
 
         const newErrors = {};
 
@@ -82,9 +117,30 @@ export default () =>
                 },
                 body: JSON.stringify(formData)
             });
-            
-        }
 
+            if (!response.ok) 
+            {
+                throw new Error('Failed to submit form data');
+            }
+
+            const data = await response.json();
+            if (data.status === 'success')
+            {
+                setFormData({title: '',
+                description: '',
+                location: '',
+                salary: '',
+                workArrangement: 'select',
+                jobType: 'select',
+                employerID: sessionStorage.getItem('id')})
+                setErrors({});
+                setAlertMessage('New job created successfully');
+                setTimeout(() => {
+                    setAlertMessage('');
+                }, 4000);
+                  
+            }
+        }
         catch (error)
         {
           console.error('Error submitting form data:', error.message);
@@ -92,21 +148,84 @@ export default () =>
 
     }   
 
-    const handleLogout = () =>
-    {
-        sessionStorage.clear();
-        history.push('/signin');
+    const viewProfile = () => {
+        return (
+            <>
+                <div className='secondfirst'>
+                    <p className='text-2xl'>User Profile</p>
+                    <div className='userdetails'>
+                        <div className='name flex flex-row'>
+                            <p className='text-green-600 text-xl'>Name</p>                           
+                            <p>{sessionStorage.getItem('name')}</p>
+                        </div>
+                        <div className='role flex flex-row'>
+                            <p className='text-green-600 text-xl'>Role</p>
+                            <p>{sessionStorage.getItem('role') === 'student' ? 'Job Seeker' : 'Employer'}</p>
+                        </div>
+                        <div className='email flex flex-row gap-10'>
+                            <p className='text-green-600 text-xl'>Email</p>
+                            <p>{sessionStorage.getItem('email')}</p>
+                        </div>
+                    </div>
+                </div>
+            </>
+        );
     }
-
-    const handleBackToMain = () =>
-    {
-        history.push('/');
-    }
+    
+    const ViewApplications = () => {
+        const [applications, setApplications] = useState([]);
+      
+        useEffect(() => {
+          const fetchApplications = async () => {
+            try {
+              const response = await fetch("http://localhost/finalproject/actions/getapplications.php");
+              if (!response.ok) {
+                throw new Error("Failed to fetch applications");
+              }
+              const data = await response.json();
+              setApplications(data);
+            } catch (error) {
+              console.error("Error fetching applications:", error.message);
+            }
+          };
+      
+          fetchApplications();
+        }, []);
+      
+        return (
+          <div>
+            <h2>Job Applications</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Applicant ID</th>
+                  <th>Job ID</th>
+                  <th>Years of Experience</th>
+                  <th>Motivation</th>
+                  <th>Applied At</th>
+                </tr>
+              </thead>
+              <tbody>
+                {applications.map((application) => (
+                  <tr key={application.ID}>
+                    <td>{application.APPLICANT_ID}</td>
+                    <td>{application.JOB_ID}</td>
+                    <td>{application.YEARS_OF_EXPERIENCE}</td>
+                    <td>{application.MOTIVATION}</td>
+                    <td>{application.APPLIED_AT}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        );
+      };
 
     const createNewJob = () =>
     {
         return(
             <>
+                {alertMessage && <div className="fixed top-0 left-0 right-0 bg-green-500 text-white text-center py-2">{alertMessage}</div>}
                 <div className='secondfirst'>
                     <p className='text-2xl'>Create a New Job</p>
                     <form>
@@ -169,7 +288,7 @@ export default () =>
                     <div className='firstfirst mt-5'>
                         <div className="flex flex-row gap-2 items-center">
                             <img src={plus} className='w-7 h-7'/>
-                            <p className="text-green-600 hover:cursor-pointer hover:text-blue-500 hover:underline">Create a Job</p>
+                            <p onClick={handleCreateJobClick} className="text-green-600 hover:cursor-pointer hover:text-blue-500 hover:underline">Create a Job</p>
                         </div>
                         <div className="flex flex-row gap-2 mt-3 items-center">
                             <img src={clip} className='w-7 h-7'/>
@@ -189,14 +308,16 @@ export default () =>
                             <img src={profile} className='w-10 h-10'/>
                             <div>
                                 <p>{sessionStorage.getItem('name')}</p>
-                                <p className="text-green-600 hover:cursor-pointer hover:text-blue-500 hover:underline">View Profile</p>
+                                <p onClick={handleShowProfile} className="text-green-600 hover:cursor-pointer hover:text-blue-500 hover:underline">View Profile</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div className="second">
-                {createNewJob()}
+                {showCreateJob && createNewJob()}
+                {showProfile && viewProfile()}
+                {showApplication && ViewApplications()}
             </div>
         </div>
     )

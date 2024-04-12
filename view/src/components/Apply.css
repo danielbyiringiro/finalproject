@@ -1,0 +1,19 @@
+.button-label {
+    border: 1px solid #4CAF50; /* Green border */
+    display: block;
+    width: 380px;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.button-label:hover {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.hidden {
+    display: none;
+}

@@ -15,9 +15,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $employer = $input['employerID'];
     $arrangement = $input['workArrangement'];
 
-    $sql = "INSERT INTO JOB (TITLE, DESCRIPTION, LOCATION, TYPE, SALARY, USER_ID, ARRANGEMENT) VALUES (?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO JOB (TITLE, DESCRIPTION, LOCATION, TYPE, SALARY, USER_ID, ARRANGEMENT) VALUES (?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssss", $job_title, $job_description, $job_location, $job_type, $job_salary, $employer, $arrangement); // Execute the prepared statement with parameter binding
+    $stmt->bind_param("ssssisi", $job_title, $job_description, $job_location, $job_type, $job_salary, $employer, $arrangement); // Execute the prepared statement with parameter binding
 
     if (!$stmt->execute()) 
     {
@@ -29,4 +29,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $response['status'] = 'success';
         $response['message'] = 'Job created successfully';
     }
+
+    echo json_encode($response);
 }
