@@ -1,0 +1,13 @@
+.alert 
+{
+    padding: 20px;
+    background-color: greenyellow; 
+    color: black;
+    margin-bottom: 15px;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    border-radius: 4px;
+}
+  

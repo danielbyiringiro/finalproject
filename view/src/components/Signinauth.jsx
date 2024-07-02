@@ -1,6 +1,7 @@
 import { useHistory, Link } from "react-router-dom"; 
 import { useState } from "react";
 import './Signin.css';
+import Alert from "./Alert";
 
 export default () =>
 {
@@ -146,6 +147,7 @@ export default () =>
 
   return (
     <>
+      <Alert/>
       <div id="login_div">
         <p id="login_title">Authenticate Email</p>
         <form method="post" name="login_form" id="login_form" onSubmit={handleSubmit}>
