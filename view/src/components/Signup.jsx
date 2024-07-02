@@ -34,6 +34,39 @@ export default function Signup() {
     {
       newErrors.username = 'Please enter your username.';
     }
+    else
+    {
+      try
+      {
+        const response = await fetch('http://localhost/thewell/actions/check_username.php', 
+        {
+          method: 'POST',
+          headers: 
+          {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ username: formData.username })
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to check username');
+        }
+
+        const data = await response.json();
+
+        if (data.status === 'error') 
+        {
+          newErrors.username = 'Username is already in use.';
+        }
+
+      }
+      catch (error)
+      {
+        console.error('Error checking username:', error.message);
+        newErrors.email = 'Error checking username.';
+      }
+
+    }
 
     if (!formData.email) 
     {
