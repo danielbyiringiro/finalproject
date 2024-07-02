@@ -5,7 +5,7 @@
     gap: 10px;
 }
 
-#name, #email , #password, #signup_button, #email_register, #confirm_password, #role
+#name, #email , #password, #signup_button, #email_register, #confirm_password, #role, #username, #student_id, #class, #major
 {
     height: 40px;
     width: 380px;

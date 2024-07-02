@@ -115,7 +115,7 @@ export default () =>
   return (
     <>
       <div id="login_div">
-        <p id="login_title">Sign In CareerConnect</p>
+        <p id="login_title">Sign In TheWell</p>
         <form method="post" name="login_form" id="login_form" onSubmit={handleSubmit}>
             <input autoFocus placeholder="Email" type="text" name="email" id="email_login" value={formData.email} onChange={handleInputChange} className={errors.email ? 'input-error shake' : ''}/>
             {errors.email && <div className="error-message">{errors.email}</div>}

@@ -1,6 +1,6 @@
 <?php
 
-$database_name = 'JOB_PORTAL';
+$database_name = 'thewell';
 $database_user = 'root';
 $database_password = '';
 $database_host = 'localhost';

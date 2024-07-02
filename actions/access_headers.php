@@ -1,5 +1,7 @@
 <?php
 
+// Access header are used in order for the API to be accessed from any domain
+
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: Content-Type'); // Allow Content-Type header
 

@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, useHistory } from 'react-router-dom';
 import Signup from './components/Signup';
 import Signin from './components/Signin';
+import Auth from './components/Signinauth';
 import Home from './components/Home';
 import Dashboard from './components/Dashboard';
 import DashboardSeeker from './components/DashboardSeeker';
@@ -28,7 +29,7 @@ const Routes = () => {
       setIsLoggedIn(true);
     } else {
       setIsLoggedIn(false);
-      history.push('/signin');
+      history.push('/auth');
     }
   }, [history]);
 
@@ -43,14 +44,8 @@ const Routes = () => {
       <Route path="/signin">
         <Signin/>
       </Route>
-      <Route path="/dashboard">
-        <Dashboard/>
-      </Route>
-      <Route path="/dashboards">
-        <DashboardSeeker/>
-      </Route>
-      <Route path="/apply">
-        <Apply/>
+      <Route path="/auth">
+        <Auth/>
       </Route>
     </>
   );

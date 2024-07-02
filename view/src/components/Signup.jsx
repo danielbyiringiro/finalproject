@@ -2,107 +2,113 @@ import { useState } from "react";
 import { useHistory, Link } from "react-router-dom"; 
 import './Signup.css';
 
-export default () =>
-{
-
+export default function Signup() {
   const [formData, setFormData] = useState({
     name: '',
+    username: '',
     email: '',
     password: '',
-    confirm_password: '',
-    role: 'select'
+    class: 'select',
+    major: 'select',
+    student_id: '',
+    confirm_password: ''
   });
 
   const history = useHistory();
+  const [errors, setErrors] = useState({});
 
-  const handleInputChange = (e) =>
-  {
+  const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
 
-  const [errors, setErrors] = useState({}); // Track input errors
-
-  const handleSubmit = async (e) =>
-  {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log(formData);
 
-    // Validate form fields
     const newErrors = {};
 
-    if (!formData.name) 
-    {
+    if (!formData.name) {
       newErrors.name = 'Please enter your name.';
+    }
+
+    if (!formData.username) 
+    {
+      newErrors.username = 'Please enter your username.';
     }
 
     if (!formData.email) 
     {
       newErrors.email = 'Please enter your email.';
-    }
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email))
+    } 
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) 
     {
       newErrors.email = 'Please enter a valid email address.';
     }
-    else
+    else if (!formData.email.endsWith("ashesi.edu.gh"))
     {
-      const response = await fetch('http://localhost/finalproject/actions/check_email.php', 
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email: formData.email })
-      });
+        newErrors.email = 'Please use your Ashesi email address.';
+    }
+    else {
+      try {
+        const response = await fetch('http://localhost/thewell/actions/check_email.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email: formData.email })
+        });
 
-      if (!response.ok) 
-      {
-        throw new Error('Failed to submit form data');
-      }
+        if (!response.ok) {
+          throw new Error('Failed to check email');
+        }
 
-      const data = await response.json();
+        const data = await response.json();
 
-      if (data.status === 'error') 
-      {
-        newErrors.email = 'Email address is already in use.';
+        if (data.status === 'error') 
+        {
+          newErrors.email = 'Email address is already in use.';
+        }
+      } catch (error) {
+        console.error('Error checking email:', error.message);
+        newErrors.email = 'Error checking email.';
       }
     }
 
-    if (!formData.password) 
-    {
+    if (!formData.password) {
       newErrors.password = 'Please enter your password.';
-    }
-    else if (formData.password.length < 8)
-    {
+    } else if (formData.password.length < 8) {
       newErrors.password = 'Password must be at least 8 characters.';
     }
 
-    if (!formData.confirm_password) 
-    {
+    if (!formData.confirm_password) {
       newErrors.confirm_password = 'Please confirm your password.';
-    }
-
-    if (formData.password !== formData.confirm_password) 
-    {
+    } else if (formData.password !== formData.confirm_password) {
       newErrors.confirm_password = 'Passwords do not match.';
     }
 
-    if (formData.role === 'select') 
-    {
-      newErrors.role = 'Please select a role.';
+    if (formData.class === 'select') {
+      newErrors.class = 'Please select a class.';
     }
 
-    if (Object.keys(newErrors).length > 0)
-    {
+    if (formData.major === 'select') {
+      newErrors.major = 'Please select a major.';
+    }
+
+    if (!formData.student_id) {
+      newErrors.student_id = 'Please enter your student ID.';
+    }
+
+    if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
 
-    try
+    try 
     {
-      const response = await fetch('http://localhost/finalproject/actions/signup_user.php', 
+      const response = await fetch('http://localhost/thewell/actions/signup_user.php', 
       {
         method: 'POST',
-        headers: {
+        headers: 
+        {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(formData)
@@ -110,54 +116,139 @@ export default () =>
 
       if (!response.ok) 
       {
-        throw new Error('Failed to submit form data');
+        throw new Error('Failed to submit form data for signup');
       }
 
       const data = await response.json();
-      if (data.status === 'success')
+      if (data.status === 'success') 
       {
         setFormData({
           name: '',
+          username: '',
+          class: 'select',
+          major: 'select',
+          student_id: '',
           email: '',
           password: '',
-          confirm_password: '',
-          role: 'select'
+          confirm_password: ''
         });
         setErrors({});
-        history.push('/signin');
+        history.push('/auth');
+      } 
+      else 
+      {
+        console.log(data.message)
+        setErrors({ form: 'Signup failed. Please try again.' });
       }
-    }
-    catch (error)
+    } 
+    catch (error) 
     {
       console.error('Error submitting form data:', error.message);
     }
   }
 
   return (
-    <>
-      <div id="signup_div">
-        <p id="signup_title">Sign up for CareerConnect</p>
-        <form method="post" name="signup_form" id="signup_form">
-          <input autoFocus placeholder='Name' type="text" name="name" id="name" value={formData.name} onChange={handleInputChange} className={errors.name ? 'input-error shake' : ''}/>
-          {errors.name && <div className="error-message">{errors.name}</div>}
-          <input placeholder="Email" type="text" name="email" id="email" value={formData.email} onChange={handleInputChange} className={errors.email ? 'input-error shake' : ''}/>
-          {errors.email && <div className="error-message">{errors.email}</div>}
-          <input placeholder="Password" type="password" name="password" id="password" value={formData.password} onChange={handleInputChange} className={errors.password ? 'input-error shake' : ''}/>
-          {errors.password && <div className="error-message">{errors.password}</div>}
-          <input placeholder="Confirm Password" type="password" name="confirm_password" id="confirm_password" value={formData.confirm_password} onChange={handleInputChange} className={errors.confirm_password ? 'input-error shake' : ''}/>
-          {errors.confirm_password && <div className="error-message">{errors.confirm_password}</div>}
-          <select name="role" id="role" value={formData.role} onChange={handleInputChange} className={errors.role ? 'input-error shake' : ''}>
-            <option disabled value="select">Role</option>
-            <option value="student">Job Seeker</option>
-            <option value="employer">Employer</option>
-          </select>
-          {errors.role && <div className="error-message">{errors.role}</div>}
-          <button type="submit" name="signup_button" id="signup_button" onClick={handleSubmit}>Sign Up</button>
-        </form>
-        <p id="login_ptag">
-          Already have an account? <Link id="login_atag" to="/signin">Sign In</Link>
-        </p>
-      </div>
-    </>
+    <div id="signup_div">
+      <p id="signup_title">Sign up for TheWell</p>
+      <form method="post" name="signup_form" id="signup_form" onSubmit={handleSubmit}>
+        <input
+          autoFocus
+          placeholder='Name'
+          type="text"
+          name="name"
+          id="name"
+          value={formData.name}
+          onChange={handleInputChange}
+          className={errors.name ? 'input-error shake' : ''}
+        />
+        {errors.name && <div className="error-message">{errors.name}</div>}
+        <input
+          placeholder='User Name'
+          type="text"
+          name="username"
+          id="username"
+          value={formData.username}
+          onChange={handleInputChange}
+          className={errors.username ? 'input-error shake' : ''}
+        />
+        {errors.username && <div className="error-message">{errors.username}</div>}
+        <input
+          placeholder="Email"
+          type="text"
+          name="email"
+          id="email"
+          value={formData.email}
+          onChange={handleInputChange}
+          className={errors.email ? 'input-error shake' : ''}
+        />
+        {errors.email && <div className="error-message">{errors.email}</div>}
+        <input
+          placeholder="Student ID"
+          type="number"
+          name="student_id"
+          id="student_id"
+          value={formData.student_id}
+          onChange={handleInputChange}
+          className={errors.student_id ? 'input-error shake' : ''}
+        />
+        {errors.student_id && <div className="error-message">{errors.student_id}</div>}
+        <select
+          name="class"
+          id="class"
+          value={formData.class}
+          onChange={handleInputChange}
+          className={errors.class ? 'input-error shake' : ''}
+        >
+          <option disabled value="select">Class</option>
+          <option value="2024">2024</option>
+          <option value="2025">2025</option>
+          <option value="2026">2026</option>
+          <option value="2027">2027</option>
+        </select>
+        {errors.class && <div className="error-message">{errors.class}</div>}
+        <select
+          name="major"
+          id="major"
+          value={formData.major}
+          onChange={handleInputChange}
+          className={errors.major ? 'input-error shake' : ''}
+        >
+          <option disabled value="select">Major</option>
+          <option value="ba">Business Administration</option>
+          <option value="cs">Computer Science</option>
+          <option value="me">Mechanical Engineering</option>
+          <option value="mis">Management Information Science</option>
+          <option value="mec">Mechatronics Engineering</option>
+          <option value="ce">Computer Engineering</option>
+          <option value="eee">Electrical and Electronics Engineering</option>
+        </select>
+        {errors.major && <div className="error-message">{errors.major}</div>}
+        <input
+          placeholder="Password"
+          type="password"
+          name="password"
+          id="password"
+          value={formData.password}
+          onChange={handleInputChange}
+          className={errors.password ? 'input-error shake' : ''}
+        />
+        {errors.password && <div className="error-message">{errors.password}</div>}
+        <input
+          placeholder="Confirm Password"
+          type="password"
+          name="confirm_password"
+          id="confirm_password"
+          value={formData.confirm_password}
+          onChange={handleInputChange}
+          className={errors.confirm_password ? 'input-error shake' : ''}
+        />
+        {errors.confirm_password && <div className="error-message">{errors.confirm_password}</div>}
+        <button type="submit" name="signup_button" id="signup_button">Sign Up</button>
+        {errors.form && <div className="error-message">{errors.form}</div>}
+      </form>
+      <p id="login_ptag">
+        Already have an account? <Link id="login_atag" to="/signin">Sign In</Link>
+      </p>
+    </div>
   );
 }

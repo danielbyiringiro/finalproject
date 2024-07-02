@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
     $email = $input['email'];
 
-    $sql = "SELECT * FROM USER WHERE email = ?";
+    $sql = "SELECT * FROM STUDENT WHERE email = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $email); // Execute the prepared statement with parameter binding
 
